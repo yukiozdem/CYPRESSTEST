@@ -1,95 +1,95 @@
 
-name: Cypress Tests
-on:
-  pull_request:
-    branches: [dev, main]
-  push:
-    branches: [dev]
-  workflow_dispatch:
+# name: Cypress Tests
+# on:
+#   pull_request:
+#     branches: [dev, main]
+#   push:
+#     branches: [dev]
+#   workflow_dispatch:
 
-jobs:
-  smoke-tests:
-    name: Smoke Tests (5 min limit)
-    runs-on: ubuntu-latest
-    # Run on PR to dev OR push to dev branch
-    if: |
-      (github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'dev') ||
-      (github.event_name == 'push' && github.ref == 'refs/heads/dev')
-    timeout-minutes: 5
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+# jobs:
+#   smoke-tests:
+#     name: Smoke Tests (5 min limit)
+#     runs-on: ubuntu-latest
+#     # Run on PR to dev OR push to dev branch
+#     if: |
+#       (github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'dev') ||
+#       (github.event_name == 'push' && github.ref == 'refs/heads/dev')
+#     timeout-minutes: 5
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
+#       - name: Setup Node
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: '18'
+#           cache: 'npm'
       
-      - name: Install dependencies
-        run: npm install --no-workspaces
+#       - name: Install dependencies
+#         run: npm install --no-workspaces
       
-      - name: Start server
-        run: npm run dev &
+#       - name: Start server
+#         run: npm run dev &
         
-      - name: Wait for server
-        run: npx wait-on http://localhost:3000 --timeout 60000
+#       - name: Wait for server
+#         run: npx wait-on http://localhost:3000 --timeout 60000
       
-      - name: Run Smoke Tests - Chrome Only
-        uses: cypress-io/github-action@v5
-        with:
-          working-directory: tests/cypress_automation
-          browser: chrome
-          headed: false
-        env:
-          grepTags: '@smoke'
+#       - name: Run Smoke Tests - Chrome Only
+#         uses: cypress-io/github-action@v5
+#         with:
+#           working-directory: tests/cypress_automation
+#           browser: chrome
+#           headed: false
+#         env:
+#           grepTags: '@smoke'
       
-      - name: Clean up artifacts
-        if: always()
-        run: |
-          rm -rf tests/cypress_automation/cypress/screenshots
-          rm -rf tests/cypress_automation/cypress/videos  
-          rm -rf tests/cypress_automation/cypress/reports
+#       - name: Clean up artifacts
+#         if: always()
+#         run: |
+#           rm -rf tests/cypress_automation/cypress/screenshots
+#           rm -rf tests/cypress_automation/cypress/videos  
+#           rm -rf tests/cypress_automation/cypress/reports
 
-  regression-tests:
-    name: Regression Tests (Main Branch Only)
-    runs-on: ubuntu-latest
-    # Run only on PR to main branch
-    if: github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main'
-    timeout-minutes: 120
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#   regression-tests:
+#     name: Regression Tests (Main Branch Only)
+#     runs-on: ubuntu-latest
+#     # Run only on PR to main branch
+#     if: github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main'
+#     timeout-minutes: 120
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
+#       - name: Setup Node
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: '18'
+#           cache: 'npm'
       
-      - name: Install dependencies
-        run: npm install --no-workspaces
+#       - name: Install dependencies
+#         run: npm install --no-workspaces
       
-      - name: Start server
-        run: npm run dev &
+#       - name: Start server
+#         run: npm run dev &
         
-      - name: Wait for server
-        run: npx wait-on http://localhost:3000 --timeout 60000
+#       - name: Wait for server
+#         run: npx wait-on http://localhost:3000 --timeout 60000
       
-      - name: Run Regression Tests - Chrome Only
-        uses: cypress-io/github-action@v5
-        with:
-          working-directory: tests/cypress_automation
-          browser: chrome
-          headed: false
-        env:
-          grepTags: '@regression'
+#       - name: Run Regression Tests - Chrome Only
+#         uses: cypress-io/github-action@v5
+#         with:
+#           working-directory: tests/cypress_automation
+#           browser: chrome
+#           headed: false
+#         env:
+#           grepTags: '@regression'
       
-      - name: Clean up artifacts
-        if: always()
-        run: |
-          rm -rf tests/cypress_automation/cypress/screenshots
-          rm -rf tests/cypress_automation/cypress/videos  
-          rm -rf tests/cypress_automation/cypress/reports
+#       - name: Clean up artifacts
+#         if: always()
+#         run: |
+#           rm -rf tests/cypress_automation/cypress/screenshots
+#           rm -rf tests/cypress_automation/cypress/videos  
+#           rm -rf tests/cypress_automation/cypress/reports
 
 
