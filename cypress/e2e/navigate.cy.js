@@ -1,5 +1,5 @@
-describe('Amazon Website Test (regression)', {tags: '@regression'}, () => {
-  it('should navigate to Amazon and verify title @regression', () => {
+describe('Amazon Website Test (regression)',  () => {
+  it('should navigate to Amazon and verify title @regression',{tags: '@regression'}, () => {
    
     // Visit Amazon website
     cy.visit('https://www.amazon.com')
@@ -9,5 +9,5 @@ describe('Amazon Website Test (regression)', {tags: '@regression'}, () => {
 
     // Optional: Add more specific title verification
     // cy.title().should('include', 'Spend less. Smile more.')
-  }),  { tags: ['smoke', 'error'] }
+  })
 })
