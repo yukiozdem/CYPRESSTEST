@@ -5,7 +5,8 @@
         // Visit Google
         cy.visit("https://www.google.com");
         cy.title().should('eq', 'Google')
-        // this is for pull request
+     
+        // this is for PR
       });
     })
 
