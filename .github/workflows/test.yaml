@@ -33,7 +33,7 @@ jobs:
         run: npm ci
         
       - name: Cache Cypress binary
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
@@ -50,7 +50,7 @@ jobs:
           config: video=false,screenshotOnRunFailure=true
           
       - name: Upload screenshots on failure
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: smoke-test-screenshots
@@ -77,7 +77,7 @@ jobs:
         run: npm ci
         
       - name: Cache Cypress binary
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
@@ -94,7 +94,7 @@ jobs:
           config: video=true,screenshotOnRunFailure=true
           
       - name: Upload test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: regression-test-results
